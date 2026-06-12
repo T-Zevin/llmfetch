@@ -4,11 +4,9 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"os/signal"
 	"sort"
 	"strconv"
 	"strings"
-	"syscall"
 	"time"
 
 	llmmodel "github.com/xzw/llmfetch/internal/model"
@@ -47,9 +45,8 @@ func Run(info system.Info, models []llmmodel.Model, opts render.Options) error {
 
 	s := state{info: info, models: models, opts: opts}
 	keys := make(chan keyResult)
-	resize := make(chan os.Signal, 1)
-	signal.Notify(resize, syscall.SIGWINCH)
-	defer signal.Stop(resize)
+	resize, stopResize := watchResize()
+	defer stopResize()
 	ticker := time.NewTicker(450 * time.Millisecond)
 	defer ticker.Stop()
 

@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.2.1
+
+- Fixed the GoReleaser archive configuration for current GoReleaser v2 releases.
+
 ## v0.2.0
 
 - Default `llmfetch` opens the interactive model browser.

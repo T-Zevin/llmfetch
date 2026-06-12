@@ -22,7 +22,7 @@ builds:
 
 archives:
   - id: default
-    builds:
+    ids:
       - llmfetch
     name_template: >-
       {{ .ProjectName }}-{{ .Version }}-
