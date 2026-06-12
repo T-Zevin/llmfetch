@@ -42,7 +42,25 @@ The goal is simple: open a terminal and quickly understand which models fit your
 
 ## Install
 
-Download the latest release:
+macOS / Linux one-line installer:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/T-Zevin/llmfetch/main/install.sh | sh
+```
+
+Install into a user directory:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/T-Zevin/llmfetch/main/install.sh | LLMFETCH_INSTALL_DIR="$HOME/.local/bin" sh
+```
+
+The Homebrew Tap formula is included in this repository. After creating `T-Zevin/homebrew-tap`, copy `packaging/homebrew/Formula/llmfetch.rb` into `Formula/llmfetch.rb` in the tap repository. Users can then run:
+
+```bash
+brew install T-Zevin/tap/llmfetch
+```
+
+Manual download:
 
 [https://github.com/T-Zevin/llmfetch/releases/latest](https://github.com/T-Zevin/llmfetch/releases/latest)
 

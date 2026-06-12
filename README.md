@@ -42,7 +42,25 @@ LLMFetch 是一个面向本地 LLM 用户的终端工具。它一部分像 `fast
 
 ## 快速安装
 
-前往最新 Release 下载对应平台的压缩包：
+macOS / Linux 一行安装：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/T-Zevin/llmfetch/main/install.sh | sh
+```
+
+如果想装到用户目录：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/T-Zevin/llmfetch/main/install.sh | LLMFETCH_INSTALL_DIR="$HOME/.local/bin" sh
+```
+
+Homebrew Tap 准备文件已经放在仓库里。创建 `T-Zevin/homebrew-tap` 后，把 `packaging/homebrew/Formula/llmfetch.rb` 放到 tap 仓库的 `Formula/llmfetch.rb`，用户即可：
+
+```bash
+brew install T-Zevin/tap/llmfetch
+```
+
+也可以手动下载 Release 对应平台的压缩包：
 
 [https://github.com/T-Zevin/llmfetch/releases/latest](https://github.com/T-Zevin/llmfetch/releases/latest)
 
