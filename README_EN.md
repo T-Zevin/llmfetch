@@ -22,6 +22,7 @@
 - [Install](#install)
 - [Usage](#usage)
 - [Interactive Keys](#interactive-keys)
+- [Ranking Columns](#ranking-columns)
 - [Highlights](#highlights)
 - [Model Registry](#model-registry)
 - [Logo Review](#logo-review)
@@ -137,6 +138,28 @@ Options:
 | `↑/↓` or `j/k` | Move selection |
 | `d` / `Enter` | Toggle model detail |
 | `q` | Quit |
+
+## Ranking Columns
+
+| Column | Meaning |
+| --- | --- |
+| `Rank` | Rank under the current filter and sort mode |
+| `Model` | Model name; long names scroll horizontally on the selected row |
+| `Provider` | Model source or main publisher, such as DeepSeek, Alibaba, or Meta |
+| `Best` | Recommended use case, such as Reasoning, Coding, Vision, or Chat |
+| `Type` | Model category, such as General, Coding, Reasoning, Vision, or Embedding |
+| `Bit` | Quantization or precision, such as Q4, 8-bit, or FP16; `Auto` means it could not be inferred reliably |
+| `Score` | Overall score based on popularity, use case, family signals, and estimated fit |
+| `Runtime` | Recommended runtime, such as MLX Native, Ollama, llama.cpp, or Transformers |
+| `In/s` | Estimated input processing speed in tokens/s |
+| `Out tok/s` | Estimated output generation speed in tokens/s |
+| `TPM` | Estimated output tokens per minute, based on `Out tok/s × 60` |
+| `Memory` | Estimated recommended memory usage |
+| `Mem%` | Estimated share of total system memory |
+| `Fit` | Fit level for the current machine: Best, Good, or Near |
+| `Context` | Context window, such as 32K, 128K, or 262K |
+| `License` | Model license, such as MIT, Apache-2, Llama, or unknown |
+| `Trend` | Estimated popularity trend based on download and metadata signals |
 
 ## Highlights
 

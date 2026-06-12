@@ -22,6 +22,7 @@
 - [快速安装](#快速安装)
 - [使用方式](#使用方式)
 - [交互快捷键](#交互快捷键)
+- [指标说明](#指标说明)
 - [功能亮点](#功能亮点)
 - [模型注册表](#模型注册表)
 - [Logo 确认](#logo-确认)
@@ -137,6 +138,28 @@ llmfetch --logos
 | `↑/↓` 或 `j/k` | 移动选中行 |
 | `d` / `Enter` | 展开或收起模型详情 |
 | `q` | 退出 |
+
+## 指标说明
+
+| 列名 | 含义 |
+| --- | --- |
+| `Rank` | 当前筛选和排序条件下的排名 |
+| `Model` | 模型名称，长名称会在选中行横向滚动 |
+| `Provider` | 模型来源或主要发布方，例如 DeepSeek、Alibaba、Meta |
+| `Best` | 推荐使用场景，例如 Reasoning、Coding、Vision、Chat |
+| `Type` | 模型类型，用于区分通用、代码、推理、视觉、Embedding 等 |
+| `Bit` | 量化或精度信息，例如 Q4、8-bit、FP16；无法可靠识别时显示 `Auto` |
+| `Score` | 综合评分，结合热度、用途、模型家族和估算适配度 |
+| `Runtime` | 推荐运行环境，例如 MLX Native、Ollama、llama.cpp、Transformers |
+| `In/s` | 估算输入处理速度，单位为 tokens/s |
+| `Out tok/s` | 估算输出生成速度，单位为 tokens/s |
+| `TPM` | 估算每分钟输出 token 数，基于 `Out tok/s × 60` |
+| `Memory` | 估算推荐内存占用 |
+| `Mem%` | 估算占当前机器总内存的比例 |
+| `Fit` | 当前机器适配等级：Best、Good、Near |
+| `Context` | 模型上下文长度，例如 32K、128K、262K |
+| `License` | 模型许可证，例如 MIT、Apache-2、Llama、unknown |
+| `Trend` | 基于下载量等信号估算的热度趋势 |
 
 ## 功能亮点
 
