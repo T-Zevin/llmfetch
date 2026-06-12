@@ -314,10 +314,13 @@ def normalize(items: list[dict[str, Any]], target: int) -> list[dict[str, Any]]:
         if not model_id or model_id in seen or should_skip(model_id):
             continue
         fam = family_for(model_id)
+        family_bonus = 5
         if fam is None:
-            continue
+            provider, family = provider_from_id(model_id), "Community"
+            family_bonus = 0
+        else:
+            provider, family = fam
         seen.add(model_id)
-        provider, family = fam
         tags = [tag for tag in item.get("tags", []) if isinstance(tag, str)]
         pipeline = item.get("pipeline_tag") or ""
         model_type, best_for = task_type(model_id, pipeline, tags)
@@ -325,7 +328,7 @@ def normalize(items: list[dict[str, Any]], target: int) -> list[dict[str, Any]]:
         memory = memory_estimate(p, model_type)
         downloads = int(item.get("downloads") or 0)
         likes = int(item.get("likes") or 0)
-        score = score_for(downloads, likes, 5, model_type)
+        score = score_for(downloads, likes, family_bonus, model_type)
         trend = min(99, max(-9, int(math.log10(downloads + 1)) - 2))
         runtime = runtime_for(model_id, model_type, provider)
         out_tps = speed_estimate(p, model_type)
@@ -363,6 +366,14 @@ def normalize(items: list[dict[str, Any]], target: int) -> list[dict[str, Any]]:
         item.pop("family", None)
         item.pop("model_id", None)
     return result
+
+
+def provider_from_id(model_id: str) -> str:
+    owner = model_id.split("/", 1)[0] if "/" in model_id else "Community"
+    cleaned = owner.replace("-", " ").replace("_", " ").strip()
+    if not cleaned:
+        return "Community"
+    return cleaned[:24]
 
 
 def display_name(model_id: str) -> str:

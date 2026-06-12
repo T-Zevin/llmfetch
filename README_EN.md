@@ -50,9 +50,9 @@ Apple Silicon Mac:
 
 ```bash
 curl -L -o llmfetch.tar.gz \
-  https://github.com/T-Zevin/llmfetch/releases/download/v0.3.0/llmfetch-0.3.0-aarch64-apple-darwin.tar.gz
+  https://github.com/T-Zevin/llmfetch/releases/download/v0.4.0/llmfetch-0.4.0-aarch64-apple-darwin.tar.gz
 tar -xzf llmfetch.tar.gz
-cd llmfetch-0.3.0-aarch64-apple-darwin
+cd llmfetch-0.4.0-aarch64-apple-darwin
 ./llmfetch
 ```
 
@@ -128,7 +128,7 @@ internal/registry/models.json
 Refresh model entries:
 
 ```bash
-python3 scripts/collect_models.py --target 5000
+python3 scripts/collect_models.py --target 10000
 make build
 ```
 

@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.4.0
+
+- Expanded the bundled model registry target to 10000 entries.
+- Updated the registry collector to include high-signal community models when known family rules do not cover enough candidates.
+
 ## v0.3.0
 
 - Expanded the bundled model registry from 500 to 5000 entries.
