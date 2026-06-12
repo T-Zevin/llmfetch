@@ -1,46 +1,48 @@
+<div align="center">
+
+<img src="docs/assets/llmfetch-logo.png" alt="LLMFetch" width="860">
+
 # LLMFetch
 
-> 中文优先 | English below each section
+**本地大模型工作站仪表盘，帮你发现最适合当前机器的模型。**
 
-[![Release](https://img.shields.io/github/v/release/T-Zevin/llmfetch?style=flat-square)](https://github.com/T-Zevin/llmfetch/releases)
-[![Build](https://img.shields.io/github/actions/workflow/status/T-Zevin/llmfetch/release.yml?style=flat-square)](https://github.com/T-Zevin/llmfetch/actions)
-[![License](https://img.shields.io/github/license/T-Zevin/llmfetch?style=flat-square)](LICENSE)
+[English](README_EN.md) · [下载 Release](https://github.com/T-Zevin/llmfetch/releases/latest) · [更新日志](CHANGELOG.md)
 
-LLMFetch 是一个面向本地大模型玩家的 AI 工作站仪表盘。它像 `fastfetch` 一样展示你的机器配置，又像轻量版 `htop` 一样浏览、搜索、排序本地 LLM 推荐榜。
+![Release](https://img.shields.io/github/v/release/T-Zevin/llmfetch?style=for-the-badge&logo=github)
+![Build](https://img.shields.io/github/actions/workflow/status/T-Zevin/llmfetch/release.yml?style=for-the-badge&logo=githubactions)
+![Go](https://img.shields.io/badge/Go-1.26-00ADD8?style=for-the-badge&logo=go)
+![License](https://img.shields.io/github/license/T-Zevin/llmfetch?style=for-the-badge)
 
-LLMFetch is a fastfetch-style AI workstation dashboard for local LLM discovery, hardware fit checks, and model recommendations.
+</div>
 
-![LLMFetch preview placeholder](docs/assets/llmfetch-preview.svg)
+## 目录
 
-> 截图预留位：真实截图可以放到 `docs/assets/screenshot.png`，然后把上面图片路径替换掉。
->
-> Screenshot slot: put the real screenshot at `docs/assets/screenshot.png`, then replace the image path above.
+- [项目介绍](#项目介绍)
+- [截图](#截图)
+- [快速安装](#快速安装)
+- [使用方式](#使用方式)
+- [交互快捷键](#交互快捷键)
+- [功能亮点](#功能亮点)
+- [模型注册表](#模型注册表)
+- [Logo 确认](#logo-确认)
+- [本地开发](#本地开发)
+- [路线图](#路线图)
 
-## ✨ 核心亮点 | Highlights
+## 项目介绍
 
-- 🖥️ **系统识别**：macOS、Apple Silicon、内存、磁盘、屏幕、电池、网络、终端环境。
-- 🧠 **AI Stack**：检测 MLX、Ollama、LM Studio、llama.cpp、vLLM 等本地运行环境。
-- 📊 **模型排行榜**：按综合分、速度、内存占用、上下文、适配度等指标排序。
-- 🔎 **交互浏览**：默认进入 htop 风格 TUI，支持搜索、筛选、排序、详情展开。
-- 🎞️ **长模型名滚动**：模型名过长时在选中行做水平滚动展示。
-- 🎨 **彩色终端 UI**：重点列高亮，支持 `--no-color`、`--ascii`、`--no-emoji`。
-- 🧩 **500 模型注册表**：内置主流本地模型样本，并可用脚本刷新。
-- 🐧 **Logo Catalog**：内置 OS/发行版 logo 候选清单，方便后续确认 Linux 支持。
+LLMFetch 是一个面向本地 LLM 用户的终端工具。它一部分像 `fastfetch`，展示你的系统、芯片、内存、屏幕、电池、运行环境；另一部分像轻量版 `htop`，让你在终端里搜索、排序、筛选模型排行榜。
 
-- 🖥️ **System detection** for macOS, Apple Silicon, memory, disk, displays, battery, network, and terminal.
-- 🧠 **AI runtime detection** for MLX, Ollama, LM Studio, llama.cpp, and vLLM.
-- 📊 **Model ranking** by score, speed, memory, context, fit, license, and provider.
-- 🔎 **Interactive TUI** with search, filters, sorting, selection, and detail view.
-- 🎞️ **Marquee model names** for long model IDs.
-- 🎨 **Color terminal UI** with compatibility switches.
-- 🧩 **Bundled 500-model registry** with refresh script.
-- 🐧 **Reviewable OS/distro logo catalog** before Linux mapping is finalized.
+目标很直接：打开终端，立刻知道这台机器适合跑什么模型、用什么 runtime、需要多少内存、速度大概多少。
 
-## 🚀 安装 | Install
+## 截图
 
-下载最新版本：
+<div align="center">
+  <img src="docs/assets/llmfetch-screenshot.png" alt="LLMFetch terminal screenshot" width="960">
+</div>
 
-Download the latest release:
+## 快速安装
+
+前往最新 Release 下载对应平台的压缩包：
 
 [https://github.com/T-Zevin/llmfetch/releases/latest](https://github.com/T-Zevin/llmfetch/releases/latest)
 
@@ -54,118 +56,93 @@ cd llmfetch-0.2.1-aarch64-apple-darwin
 ./llmfetch
 ```
 
-macOS 如果提示未验证开发者，可以先本地解除隔离属性：
-
-If macOS blocks the binary, remove the quarantine attribute locally:
+macOS 如果提示未验证开发者，可以执行：
 
 ```bash
 xattr -dr com.apple.quarantine ./llmfetch
 ```
 
-## ⚡ 快速使用 | Quick Start
+## 使用方式
 
 ```bash
-# 默认：打开交互界面
-# Default: open interactive TUI
+# 默认进入交互界面
 llmfetch
 
 # 快照模式，类似 fastfetch
-# Static snapshot, similar to fastfetch
 llmfetch --snapshot
 
-# JSON 输出，方便脚本或前端读取
-# JSON output for scripts or frontends
+# 输出 JSON，方便脚本或前端读取
 llmfetch --json
 
 # 查看候选 OS / Linux 发行版 logo
-# Preview candidate OS / Linux distro logos
 llmfetch --logos
 ```
 
-## 🕹️ 交互快捷键 | Interactive Keys
+参数说明：
 
-| Key | 中文 | English |
-| --- | --- | --- |
-| `/` | 进入搜索 | Enter search mode |
-| `Esc` / `Enter` | 退出搜索 | Leave search mode |
-| `Ctrl+U` | 清空搜索输入 | Clear search input |
-| `c` | 清空搜索 | Clear search |
-| `s` | 切换排序：Score、Out tok/s、Memory、Context、Fit、Trend | Cycle sort modes |
-| `f` | 切换适配筛选：All、Best、Good、Near | Cycle fit filters |
-| `↑/↓` or `j/k` | 移动选中行 | Move selection |
-| `d` / `Enter` | 展开/收起模型详情 | Toggle model detail |
-| `q` | 退出 | Quit |
+| 参数 | 说明 |
+| --- | --- |
+| `llmfetch` | 默认打开交互式模型浏览器 |
+| `-i`, `--interactive` | 显式打开交互式模型浏览器 |
+| `-s`, `--snapshot` | 输出一次性系统和模型快照 |
+| `--json` | 输出 JSON 数据 |
+| `--logos` | 打印候选 OS / Linux 发行版 logo |
+| `--ascii` | 禁用 Unicode 边框和 emoji |
+| `--no-color` | 禁用 ANSI 颜色 |
+| `--no-emoji` | 禁用 emoji，保留 Unicode 边框 |
+| `--help` | 查看帮助 |
 
-## 🧰 参数 | CLI Options
+## 交互快捷键
 
-| 参数 | 中文说明 | English |
-| --- | --- | --- |
-| `llmfetch` | 默认打开交互界面 | Open interactive TUI by default |
-| `-i`, `--interactive` | 显式打开交互界面 | Open interactive TUI |
-| `-s`, `--snapshot` | 输出一次性快照 | Print static dashboard snapshot |
-| `--json` | 输出 JSON | Print JSON snapshot |
-| `--logos` | 打印候选 logo 清单 | Print logo catalog |
-| `--ascii` | 禁用 Unicode 边框和 emoji | Disable Unicode boxes and emoji |
-| `--no-color` | 禁用 ANSI 颜色 | Disable ANSI colors |
-| `--no-emoji` | 禁用 emoji，保留 Unicode 边框 | Disable emoji only |
-| `--help` | 查看帮助 | Show help |
+| 按键 | 功能 |
+| --- | --- |
+| `/` | 进入搜索 |
+| `Esc` / `Enter` | 退出搜索 |
+| `Ctrl+U` | 清空搜索输入 |
+| `c` | 清空搜索 |
+| `s` | 切换排序：Score、Out tok/s、Memory、Context、Fit、Trend |
+| `f` | 切换适配筛选：All、Best、Good、Near |
+| `↑/↓` 或 `j/k` | 移动选中行 |
+| `d` / `Enter` | 展开或收起模型详情 |
+| `q` | 退出 |
 
-## 📦 发布包 | Release Artifacts
+## 功能亮点
 
-当前 GitHub Release 会自动构建这些平台：
+- 系统识别：macOS、Apple Silicon、内存、磁盘、屏幕、电池、网络、终端环境。
+- AI Stack：检测 MLX、Ollama、LM Studio、llama.cpp、vLLM 等本地运行环境。
+- 模型排行榜：按综合分、速度、内存、上下文、适配度、许可证等指标排序。
+- 交互浏览：支持搜索、筛选、排序、选择、详情展开。
+- 长模型名滚动：选中行自动水平滚动长模型名。
+- 彩色终端 UI：重点列高亮，同时支持无颜色、ASCII、无 emoji 模式。
+- 多平台发布：macOS、Linux、Windows，支持 arm64 和 x86_64。
 
-Current GitHub Release builds these targets automatically:
+## 模型注册表
 
-| Platform | Arch | Package |
-| --- | --- | --- |
-| macOS | Apple Silicon | `aarch64-apple-darwin.tar.gz` |
-| macOS | Intel | `x86_64-apple-darwin.tar.gz` |
-| Linux | ARM64 | `aarch64-unknown-linux-gnu.tar.gz` |
-| Linux | x86_64 | `x86_64-unknown-linux-gnu.tar.gz` |
-| Windows | ARM64 | `aarch64-pc-windows-msvc.zip` |
-| Windows | x86_64 | `x86_64-pc-windows-msvc.zip` |
-
-每个版本都会附带 `checksums.txt`。
-
-Each release includes `checksums.txt`.
-
-## 🧠 模型注册表 | Model Registry
-
-内置模型数据：
-
-Bundled model data:
+内置模型数据位于：
 
 ```text
 registry/models.json
 internal/registry/models.json
 ```
 
-刷新 500 个模型样本：
-
-Refresh 500 model entries:
+刷新模型：
 
 ```bash
-python3 scripts/collect_models.py --target 500
+python3 scripts/collect_models.py --target 5000
 make build
 ```
 
 当前采集脚本使用 Hugging Face public API 做发现和归一化。长期目标是做一个“自动采集 + 人工校准”的本地模型 registry，而不是每次运行都依赖实时 API。
 
-The collector currently uses the Hugging Face public API for discovery and normalization. The long-term goal is a curated registry enriched by automated metadata fetchers, not a live API dependency at runtime.
-
-## 🐧 Logo 确认 | Logo Review
+## Logo 确认
 
 预览 LLMFetch 内置候选 logo：
-
-Preview built-in candidate logos:
 
 ```bash
 ./bin/llmfetch --logos
 ```
 
 如果本机安装了 fastfetch / neofetch，可以对照确认 Linux 发行版风格：
-
-If fastfetch / neofetch is installed, compare distro styles:
 
 ```bash
 fastfetch --list-logos
@@ -175,8 +152,6 @@ neofetch -L --ascii_distro Ubuntu
 
 后续 Linux 自动识别会优先读取 `/etc/os-release`：
 
-Linux auto-detection will later map from `/etc/os-release`:
-
 ```text
 ID=ubuntu
 ID_LIKE=debian
@@ -184,7 +159,7 @@ NAME="Ubuntu"
 PRETTY_NAME="Ubuntu 24.04.2 LTS"
 ```
 
-## 🛠️ 本地开发 | Development
+## 本地开发
 
 ```bash
 git clone git@github.com:T-Zevin/llmfetch.git
@@ -196,8 +171,6 @@ make build
 
 生成本地 macOS 包：
 
-Create a local macOS package:
-
 ```bash
 make build
 mkdir -p dist
@@ -205,40 +178,14 @@ tar -C bin -czf dist/llmfetch-<version>-aarch64-apple-darwin.tar.gz llmfetch
 shasum -a 256 dist/llmfetch-<version>-aarch64-apple-darwin.tar.gz
 ```
 
-## 🚢 发布 | Release
-
-推送 `v*` tag 会触发 GitHub Actions + GoReleaser：
-
-Push a `v*` tag to trigger GitHub Actions + GoReleaser:
-
-```bash
-git tag v0.2.1
-git push origin main --tags
-```
-
-配置文件：
-
-Config files:
-
-```text
-.github/workflows/release.yml
-.goreleaser.yaml
-```
-
-## 📍 路线图 | Roadmap
+## 路线图
 
 - Linux 发行版 logo 与 `/etc/os-release` 自动映射
 - 更完整的模型来源、license、quant、backend 可信度校准
 - `--limit`、`--sort`、`--filter`、`--provider` 等 CLI 参数
-- 可选 benchmark / live-bench 模块
-- Homebrew tap / install script
+- benchmark / live-bench 模块
+- Homebrew Tap 与一行安装脚本
 
-- Linux distro logo mapping via `/etc/os-release`
-- Better provider, license, quant, and backend confidence metadata
-- More CLI filters such as `--limit`, `--sort`, `--filter`, and `--provider`
-- Optional benchmark / live-bench modules
-- Homebrew tap / install script
-
-## 📄 License
+## License
 
 MIT
