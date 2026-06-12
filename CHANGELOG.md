@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.3.0
+
+- Expanded the bundled model registry from 500 to 5000 entries.
+- Refreshed the README into separate Chinese and English pages with project assets.
+
 ## v0.2.1
 
 - Fixed the GoReleaser archive configuration for current GoReleaser v2 releases.
