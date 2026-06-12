@@ -67,6 +67,13 @@ brew tap T-Zevin/tap
 brew install llmfetch
 ```
 
+如果 GitHub HTTPS clone 被 reset，可以改用 SSH tap：
+
+```bash
+brew tap T-Zevin/tap git@github.com:T-Zevin/homebrew-tap.git
+brew install T-Zevin/tap/llmfetch
+```
+
 也可以手动下载 Release 对应平台的压缩包：
 
 [https://github.com/T-Zevin/llmfetch/releases/latest](https://github.com/T-Zevin/llmfetch/releases/latest)

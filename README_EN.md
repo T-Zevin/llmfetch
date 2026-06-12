@@ -67,6 +67,13 @@ brew tap T-Zevin/tap
 brew install llmfetch
 ```
 
+If GitHub HTTPS clone is reset, use the SSH tap URL:
+
+```bash
+brew tap T-Zevin/tap git@github.com:T-Zevin/homebrew-tap.git
+brew install T-Zevin/tap/llmfetch
+```
+
 Manual download:
 
 [https://github.com/T-Zevin/llmfetch/releases/latest](https://github.com/T-Zevin/llmfetch/releases/latest)

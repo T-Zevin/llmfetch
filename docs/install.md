@@ -15,6 +15,19 @@ brew tap T-Zevin/tap
 brew install llmfetch
 ```
 
+If Homebrew fails while cloning GitHub over HTTPS:
+
+```text
+fatal: unable to access 'https://github.com/T-Zevin/homebrew-tap/': Recv failure: Connection reset by peer
+```
+
+Use the SSH tap URL instead:
+
+```bash
+brew tap T-Zevin/tap git@github.com:T-Zevin/homebrew-tap.git
+brew install T-Zevin/tap/llmfetch
+```
+
 The tap repository is:
 
 ```text
