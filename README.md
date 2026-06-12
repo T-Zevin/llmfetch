@@ -10,20 +10,11 @@ LLMFetch 是一个面向本地大模型玩家的 AI 工作站仪表盘。它像 
 
 LLMFetch is a fastfetch-style AI workstation dashboard for local LLM discovery, hardware fit checks, and model recommendations.
 
-```text
-LLMFetch  AI workstation dashboard
+![LLMFetch preview placeholder](docs/assets/llmfetch-preview.svg)
 
-┌──────────────────────┬──────────────────────────────┬────────────────────────┐
-│        Apple Logo     │ System                       │ AI Stack               │
-│                      │ CPU       Apple M3 Max        │ Runtime   MLX / Ollama  │
-│                      │ Memory    36 GB               │ Profile   MLX Powerhouse│
-│                      │ Display   3 screens           │ AI Score  82            │
-└──────────────────────┴──────────────────────────────┴────────────────────────┘
-
-Rank  Model                 Provider  Score  Runtime     Out tok/s  Memory  Fit
-1     DeepSeek-R1-0528      DeepSeek  97     MLX Native  90         8GB     Best
-2     Qwen3-Coder-30B-A3B   Alibaba   96     MLX Native  55         24GB    Best
-```
+> 截图预留位：真实截图可以放到 `docs/assets/screenshot.png`，然后把上面图片路径替换掉。
+>
+> Screenshot slot: put the real screenshot at `docs/assets/screenshot.png`, then replace the image path above.
 
 ## ✨ 核心亮点 | Highlights
 
