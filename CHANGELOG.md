@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.4.1
+
+- Updated installation docs for the public Homebrew tap.
+
 ## v0.4.0
 
 - Expanded the bundled model registry target to 10000 entries.

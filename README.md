@@ -54,10 +54,17 @@ curl -fsSL https://raw.githubusercontent.com/T-Zevin/llmfetch/main/install.sh | 
 curl -fsSL https://raw.githubusercontent.com/T-Zevin/llmfetch/main/install.sh | LLMFETCH_INSTALL_DIR="$HOME/.local/bin" sh
 ```
 
-Homebrew Tap 准备文件已经放在仓库里。创建 `T-Zevin/homebrew-tap` 后，把 `packaging/homebrew/Formula/llmfetch.rb` 放到 tap 仓库的 `Formula/llmfetch.rb`，用户即可：
+Homebrew 安装：
 
 ```bash
 brew install T-Zevin/tap/llmfetch
+```
+
+或者：
+
+```bash
+brew tap T-Zevin/tap
+brew install llmfetch
 ```
 
 也可以手动下载 Release 对应平台的压缩包：
@@ -68,9 +75,9 @@ Apple Silicon Mac:
 
 ```bash
 curl -L -o llmfetch.tar.gz \
-  https://github.com/T-Zevin/llmfetch/releases/download/v0.4.0/llmfetch-0.4.0-aarch64-apple-darwin.tar.gz
+  https://github.com/T-Zevin/llmfetch/releases/download/v0.4.1/llmfetch-0.4.1-aarch64-apple-darwin.tar.gz
 tar -xzf llmfetch.tar.gz
-cd llmfetch-0.4.0-aarch64-apple-darwin
+cd llmfetch-0.4.1-aarch64-apple-darwin
 ./llmfetch
 ```
 

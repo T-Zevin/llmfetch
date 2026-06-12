@@ -54,10 +54,17 @@ Install into a user directory:
 curl -fsSL https://raw.githubusercontent.com/T-Zevin/llmfetch/main/install.sh | LLMFETCH_INSTALL_DIR="$HOME/.local/bin" sh
 ```
 
-The Homebrew Tap formula is included in this repository. After creating `T-Zevin/homebrew-tap`, copy `packaging/homebrew/Formula/llmfetch.rb` into `Formula/llmfetch.rb` in the tap repository. Users can then run:
+Homebrew:
 
 ```bash
 brew install T-Zevin/tap/llmfetch
+```
+
+Or:
+
+```bash
+brew tap T-Zevin/tap
+brew install llmfetch
 ```
 
 Manual download:
@@ -68,9 +75,9 @@ Apple Silicon Mac:
 
 ```bash
 curl -L -o llmfetch.tar.gz \
-  https://github.com/T-Zevin/llmfetch/releases/download/v0.4.0/llmfetch-0.4.0-aarch64-apple-darwin.tar.gz
+  https://github.com/T-Zevin/llmfetch/releases/download/v0.4.1/llmfetch-0.4.1-aarch64-apple-darwin.tar.gz
 tar -xzf llmfetch.tar.gz
-cd llmfetch-0.4.0-aarch64-apple-darwin
+cd llmfetch-0.4.1-aarch64-apple-darwin
 ./llmfetch
 ```
 

@@ -2,18 +2,6 @@
 
 ## macOS: Homebrew Tap
 
-Create a public repository named:
-
-```text
-T-Zevin/homebrew-tap
-```
-
-Then copy this file into that repository:
-
-```text
-packaging/homebrew/Formula/llmfetch.rb -> Formula/llmfetch.rb
-```
-
 Users can install with:
 
 ```bash
@@ -25,6 +13,12 @@ Or:
 ```bash
 brew tap T-Zevin/tap
 brew install llmfetch
+```
+
+The tap repository is:
+
+```text
+https://github.com/T-Zevin/homebrew-tap
 ```
 
 ## macOS / Linux: Install Script
