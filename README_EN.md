@@ -83,9 +83,9 @@ Apple Silicon Mac:
 
 ```bash
 curl -L -o llmfetch.tar.gz \
-  https://github.com/T-Zevin/llmfetch/releases/download/v0.4.1/llmfetch-0.4.1-aarch64-apple-darwin.tar.gz
+  https://github.com/T-Zevin/llmfetch/releases/download/v0.5.0/llmfetch-0.5.0-aarch64-apple-darwin.tar.gz
 tar -xzf llmfetch.tar.gz
-cd llmfetch-0.4.1-aarch64-apple-darwin
+cd llmfetch-0.5.0-aarch64-apple-darwin
 ./llmfetch
 ```
 
@@ -180,10 +180,12 @@ registry/models.json
 internal/registry/models.json
 ```
 
+`v0.5.0` contains 12,279 models. The collector searches both popular and recently updated models, then filters adapters, checkpoints, duplicate display entries, and other records that should not appear directly in the ranking.
+
 Refresh model entries:
 
 ```bash
-python3 scripts/collect_models.py --target 10000
+python3 scripts/collect_models.py
 make build
 ```
 

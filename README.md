@@ -83,9 +83,9 @@ Apple Silicon Mac:
 
 ```bash
 curl -L -o llmfetch.tar.gz \
-  https://github.com/T-Zevin/llmfetch/releases/download/v0.4.1/llmfetch-0.4.1-aarch64-apple-darwin.tar.gz
+  https://github.com/T-Zevin/llmfetch/releases/download/v0.5.0/llmfetch-0.5.0-aarch64-apple-darwin.tar.gz
 tar -xzf llmfetch.tar.gz
-cd llmfetch-0.4.1-aarch64-apple-darwin
+cd llmfetch-0.5.0-aarch64-apple-darwin
 ./llmfetch
 ```
 
@@ -180,10 +180,12 @@ registry/models.json
 internal/registry/models.json
 ```
 
+`v0.5.0` 当前收录 12,279 个模型，采集器同时检索热门模型与最近更新模型，并过滤 adapter、checkpoint、重复显示项等不适合直接进入榜单的记录。
+
 刷新模型：
 
 ```bash
-python3 scripts/collect_models.py --target 10000
+python3 scripts/collect_models.py
 make build
 ```
 

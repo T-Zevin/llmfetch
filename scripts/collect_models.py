@@ -82,6 +82,30 @@ FAMILY_RULES = [
     ("xverse", "XVERSE", "XVERSE"),
     ("solar", "Upstage", "SOLAR"),
     ("exaone", "LG AI Research", "EXAONE"),
+    ("kimi", "Moonshot AI", "Kimi"),
+    ("moonshot", "Moonshot AI", "Kimi"),
+    ("minimax", "MiniMax", "MiniMax"),
+    ("hunyuan", "Tencent", "Hunyuan"),
+    ("ernie", "Baidu", "ERNIE"),
+    ("seed-oss", "ByteDance", "Seed OSS"),
+    ("stepfun", "StepFun", "Step"),
+    ("gpt-oss", "OpenAI", "GPT-OSS"),
+    ("devstral", "Mistral", "Devstral"),
+    ("magistral", "Mistral", "Magistral"),
+    ("ministral", "Mistral", "Ministral"),
+    ("pixtral", "Mistral", "Pixtral"),
+    ("llava", "LLaVA", "LLaVA"),
+    ("internvl", "OpenGVLab", "InternVL"),
+    ("moondream", "Moondream", "Moondream"),
+    ("janus", "DeepSeek", "Janus"),
+    ("cogvlm", "Zhipu", "CogVLM"),
+    ("idefics", "Hugging Face", "Idefics"),
+    ("paligemma", "Google", "PaliGemma"),
+    ("rwkv", "RWKV", "RWKV"),
+    ("mamba", "State Spaces", "Mamba"),
+    ("jamba", "AI21 Labs", "Jamba"),
+    ("bloom", "BigScience", "BLOOM"),
+    ("openelm", "Apple", "OpenELM"),
 ]
 
 SKIP_PATTERNS = [
@@ -101,11 +125,13 @@ SKIP_PATTERNS = [
     "gpt-",
     "chatgpt",
     "grok",
+    "tokenizer",
+    "poison",
 ]
 
 
 def fetch_json(url: str, timeout: int = 45) -> Any:
-    request = urllib.request.Request(url, headers={"User-Agent": "llmfetch-registry-builder/0.1"})
+    request = urllib.request.Request(url, headers={"User-Agent": "llmfetch-registry-builder/0.2"})
     with urllib.request.urlopen(request, timeout=timeout) as response:
         return json.loads(response.read().decode("utf-8"))
 
@@ -120,25 +146,33 @@ def discover(limit_per_query: int) -> list[dict[str, Any]]:
 
     queries: list[dict[str, Any]] = []
     for pipeline in PIPELINES:
-        queries.append(
-            {
-                "pipeline_tag": pipeline,
-                "sort": "downloads",
-                "direction": "-1",
-                "limit": limit_per_query,
-                "full": "true",
-            }
-        )
+        for sort, limit in [
+            ("downloads", limit_per_query),
+            ("lastModified", min(limit_per_query, 400)),
+        ]:
+            queries.append(
+                {
+                    "pipeline_tag": pipeline,
+                    "sort": sort,
+                    "direction": "-1",
+                    "limit": limit,
+                    "full": "true",
+                }
+            )
     for keyword, _, _ in FAMILY_RULES:
-        queries.append(
-            {
-                "search": keyword,
-                "sort": "downloads",
-                "direction": "-1",
-                "limit": min(limit_per_query, 200),
-                "full": "true",
-            }
-        )
+        for sort, limit in [
+            ("downloads", min(limit_per_query, 200)),
+            ("lastModified", min(limit_per_query, 50)),
+        ]:
+            queries.append(
+                {
+                    "search": keyword,
+                    "sort": sort,
+                    "direction": "-1",
+                    "limit": limit,
+                    "full": "true",
+                }
+            )
 
     for i, params in enumerate(queries, 1):
         try:
@@ -166,10 +200,34 @@ def family_for(model_id: str) -> tuple[str, str] | None:
 
 def should_skip(model_id: str) -> bool:
     lowered = model_id.lower()
-    if any(pattern in lowered for pattern in SKIP_PATTERNS):
+    patterns = SKIP_PATTERNS
+    if "gpt-oss" in lowered:
+        patterns = [pattern for pattern in patterns if pattern != "gpt-"]
+    if any(pattern in lowered for pattern in patterns):
+        return True
+    if re.search(r"(?:^|[-_/])(ckpt|checkpoint|global-step|epoch)[-_]?\d*", lowered):
         return True
     if lowered.count("/") > 1:
         return True
+    return False
+
+
+def should_skip_item(item: dict[str, Any], family_known: bool) -> bool:
+    tags = [str(tag).lower() for tag in item.get("tags", [])]
+    library = str(item.get("library_name") or "").lower()
+    pipeline = str(item.get("pipeline_tag") or "")
+    downloads = int(item.get("downloads") or 0)
+    likes = int(item.get("likes") or 0)
+
+    if library == "peft" or "lora" in tags or any("base_model:adapter:" in tag for tag in tags):
+        return True
+    if "generated_from_trainer" in tags and downloads < 10 and likes < 2:
+        return True
+    if not family_known:
+        if pipeline not in {"text-generation", "image-text-to-text", "text2text-generation"}:
+            return True
+        if downloads < 25 and likes < 3:
+            return True
     return False
 
 
@@ -314,6 +372,8 @@ def normalize(items: list[dict[str, Any]], target: int) -> list[dict[str, Any]]:
         if not model_id or model_id in seen or should_skip(model_id):
             continue
         fam = family_for(model_id)
+        if should_skip_item(item, fam is not None):
+            continue
         family_bonus = 5
         if fam is None:
             provider, family = provider_from_id(model_id), "Community"
@@ -356,7 +416,17 @@ def normalize(items: list[dict[str, Any]], target: int) -> list[dict[str, Any]]:
         )
 
     candidates.sort(key=lambda m: (m["score"], m["downloads"], m["likes"]), reverse=True)
-    result = candidates[:target]
+
+    deduplicated: list[dict[str, Any]] = []
+    display_keys: set[tuple[str, str]] = set()
+    for item in candidates:
+        key = (item["provider"].lower(), item["name"].lower())
+        if key in display_keys:
+            continue
+        display_keys.add(key)
+        deduplicated.append(item)
+
+    result = deduplicated if target <= 0 else deduplicated[:target]
     for idx, item in enumerate(result, 1):
         item["rank"] = idx
         # Keep runtime fields lean for the Go struct. Extra fields are harmless
@@ -396,8 +466,8 @@ def normalize_license(value: str) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--target", type=int, default=500)
-    parser.add_argument("--limit-per-query", type=int, default=500)
+    parser.add_argument("--target", type=int, default=0, help="maximum entries; 0 keeps all qualified models")
+    parser.add_argument("--limit-per-query", type=int, default=1500)
     parser.add_argument("--output", type=Path, default=OUT_REGISTRY)
     args = parser.parse_args()
 
@@ -405,14 +475,14 @@ def main() -> int:
     raw = discover(args.limit_per_query)
     print(f"[info] discovered {len(raw)} unique candidates before filtering", file=sys.stderr)
     models = normalize(raw, args.target)
-    if len(models) < args.target:
+    if args.target > 0 and len(models) < args.target:
         print(f"[warn] only produced {len(models)} models; target was {args.target}", file=sys.stderr)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(models, indent=2, ensure_ascii=False) + "\n")
     if args.output.resolve() == OUT_REGISTRY.resolve():
         shutil.copyfile(OUT_REGISTRY, EMBED_REGISTRY)
     print(f"[info] wrote {len(models)} models to {args.output}", file=sys.stderr)
-    return 0 if len(models) >= min(args.target, 1) else 1
+    return 0 if models else 1
 
 
 if __name__ == "__main__":

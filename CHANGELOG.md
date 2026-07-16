@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.5.0
+
+- Refreshed the registry from current Hugging Face popular and recently updated model listings.
+- Expanded the bundled registry from 10000 to 12279 naturally filtered entries.
+- Added current model families including Kimi, MiniMax, Hunyuan, GPT-OSS, Devstral, InternVL, LLaVA, RWKV, Mamba, and others.
+- Filtered adapters, checkpoints, tokenizers, poisoned derivatives, and duplicate display entries.
+- Changed the collector default to keep all qualified models instead of targeting a round number.
+
 ## v0.4.1
 
 - Updated installation docs for the public Homebrew tap.
