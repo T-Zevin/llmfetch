@@ -1,26 +1,26 @@
 class Llmfetch < Formula
   desc "AI workstation dashboard for local LLM discovery and fit checks"
   homepage "https://github.com/T-Zevin/llmfetch"
-  version "0.4.0"
+  version "0.5.0"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/T-Zevin/llmfetch/releases/download/v0.4.0/llmfetch-0.4.0-aarch64-apple-darwin.tar.gz"
-      sha256 "0cf61e505cadc16cda3f87d18d6d8417b8dc5f830ba607fffc3ea6090d58d612"
+      url "https://github.com/T-Zevin/llmfetch/releases/download/v0.5.0/llmfetch-0.5.0-aarch64-apple-darwin.tar.gz"
+      sha256 "1bb1d0258fb3c11cc60febe7abbde742cd883b676172a6a1006aa4097ab0dd67"
     else
-      url "https://github.com/T-Zevin/llmfetch/releases/download/v0.4.0/llmfetch-0.4.0-x86_64-apple-darwin.tar.gz"
-      sha256 "ae122f93e9c679e6a18db342fb4ee8eca9a0a8d12f351fbb8e7258e58fdf49e9"
+      url "https://github.com/T-Zevin/llmfetch/releases/download/v0.5.0/llmfetch-0.5.0-x86_64-apple-darwin.tar.gz"
+      sha256 "faeb159b5b58b1ca844d85d4a2cdb574ee444292d378ef6373d8817392e016e0"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
-      url "https://github.com/T-Zevin/llmfetch/releases/download/v0.4.0/llmfetch-0.4.0-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "6b0d06434509544a660905e5890ed1f2c904bc23a4f26e50bfa3812af9ca3d14"
+      url "https://github.com/T-Zevin/llmfetch/releases/download/v0.5.0/llmfetch-0.5.0-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "3cb462611d3141f79f9a35d772a47d9cd7318ebb565f0fdd28137cfffb5a8252"
     else
-      url "https://github.com/T-Zevin/llmfetch/releases/download/v0.4.0/llmfetch-0.4.0-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "5bdd4f148fa5a7bcc855bf0b85b447036acba5618df254ae505d326c3ac36a19"
+      url "https://github.com/T-Zevin/llmfetch/releases/download/v0.5.0/llmfetch-0.5.0-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "ef93fa66615f00a99a947fd5978fcbec68ab462f46835245cb70a6d2360f03ff"
     end
   end
 
